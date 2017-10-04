@@ -61,46 +61,56 @@ public class xmlTask {
         return salary;
     }
 
-    public void setJobTitile(String firstName, String secondName, String newJobTitle) throws TransformerException {
+    public void setJobTitle(String firstName, String secondName, String newJobTitle) throws TransformerException {
         // Меняет должность сотрудника
         NodeList nodeList = doc.getElementsByTagName("employee");
         Element elNodeList;
         for (int i = 0; i < nodeList.getLength() ; i++) {
             elNodeList = (Element) nodeList.item(i);
-            if(elNodeList.getAttribute("firstname").equals("firstName")&&
-               elNodeList.getAttribute("secondname").equals("secondName")){
-                elNodeList.setAttribute("jobtitle",newJobTitle);
+            if(elNodeList.getAttribute("firstname").equals(firstName)&&
+               elNodeList.getAttribute("secondname").equals(secondName)){
+                elNodeList.getElementsByTagName("jobtitle").item(0).setTextContent(newJobTitle);
+                saveXML();
+                break;
             }
         }
-        saveXML();
     }
 
     public void setSalary(String firstName, String secondName, int newSalary) throws TransformerException {
+
         // Меняет зарплату сотрудника
         NodeList nodeList = doc.getElementsByTagName("employee");
         Element elNodeList;
         for (int i = 0; i < nodeList.getLength() ; i++) {
             elNodeList = (Element) nodeList.item(i);
-            if(elNodeList.getAttribute("firstname").equals("firstName")&&
-                    elNodeList.getAttribute("secondname").equals("secondName")){
-                elNodeList.setAttribute("salary",String.valueOf(newSalary));
+            if(elNodeList.getAttribute("firstname").equals(firstName)&&
+                    elNodeList.getAttribute("secondname").equals(secondName)){
+                elNodeList.getElementsByTagName("salary").item(0).setTextContent(Integer.toString(newSalary));
+                saveXML();
+                break;
             }
         }
-        saveXML();
+
     }
 
     public void fireEmployee(String firstName, String secondName) throws TransformerException {
         // Удаляет сотрудника
-        NodeList nodeList = doc.getElementsByTagName("employee");
+        NodeList nodeList = doc.getElementsByTagName("department");
+        NodeList listEmployees;
         Element elNodeList;
-        for (int i = 0; i < nodeList.getLength() ; i++) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
             elNodeList = (Element) nodeList.item(i);
-            if(elNodeList.getAttribute("firstname").equals("firstName")&&
-                    elNodeList.getAttribute("secondname").equals("secondName")){
-                elNodeList.removeChild(elNodeList);
+            listEmployees = elNodeList.getElementsByTagName("employee");
+            for(int j = 0; j<listEmployees.getLength(); j++) {
+                elNodeList = (Element) listEmployees.item(j);
+                if ((elNodeList.getAttribute("firstname").equals(firstName) &
+                    elNodeList.getAttribute("secondname").equals(secondName))) {
+                    nodeList.item(i).removeChild(elNodeList);
+                    saveXML();
+                    break;
+                }
             }
         }
-        saveXML();
     }
 
 
@@ -109,5 +119,6 @@ public class xmlTask {
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(new File(path));
         trans.transform(source, result);
-    }
+        }
+
 }

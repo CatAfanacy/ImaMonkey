@@ -28,7 +28,7 @@
         
         <employee firstname="Mikhail" salary="5000" secondname="Sadykov">
             <hiredate>10-10-2007</hiredate>
-            <salary>5000</salary>
+            <salary>15000</salary>
             <jobtitle value="assistant"/>
         </employee>
         
@@ -38,18 +38,7 @@
             <jobtitle value="engineer"/>
         </employee>
 
-        <employee firstname="Kirill" secondname="Armeitsev">
-            <hiredate>4-10-2017</hiredate>
-            <salary>12341</salary>
-            <jobtitle value="assistant"/>
-        </employee>
-
-
-<!--        <employee firstname="Kirill" secondname="Armeitsev">
-            <hiredate>4-10-2017</hiredate>
-            <salary>12341</salary>
-            <jobtitle value="assistant"/>
-        </employee>-->
+        
 
     </department>
 </organization>
