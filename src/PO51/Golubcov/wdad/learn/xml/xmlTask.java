@@ -30,7 +30,7 @@ public class xmlTask {
     }
 
     public int salaryAverage() {
-        // Средняя зарплата сотрудников
+        // РЎСЂРµРґРЅСЏСЏ Р·Р°СЂР°Р±РѕС‚РЅР°СЏ РїР»Р°С‚Р°
         Element elNodeList;
         int salary =0;
         NodeList nodeList = doc.getElementsByTagName("employee");
@@ -42,7 +42,7 @@ public class xmlTask {
     }
 
     public int salaryAverage(String departmentName){
-        // Средняя зарплата сотрудников отдела "departmentName"
+        // РЎСЂРµРґРЅСЏСЏ Р·Р°СЂРѕР±РѕС‚РЅР°СЏ РїР»Р°С‚Р° РѕС‚РґРµР»Р° "departmentName"
         int salary=0;
         NodeList nodeList = doc.getElementsByTagName("department");
         NodeList listEmployees;
@@ -62,7 +62,7 @@ public class xmlTask {
     }
 
     public void setJobTitle(String firstName, String secondName, String newJobTitle) throws TransformerException {
-        // Меняет должность сотрудника
+        // РР·РјРµРЅРёС‚СЊ РґРѕР»Р¶РЅРѕСЃС‚СЊ СЂР°Р±РѕС‚РЅРёРєСѓ
         NodeList nodeList = doc.getElementsByTagName("employee");
         Element elNodeList;
         for (int i = 0; i < nodeList.getLength() ; i++) {
@@ -77,8 +77,7 @@ public class xmlTask {
     }
 
     public void setSalary(String firstName, String secondName, int newSalary) throws TransformerException {
-
-        // Меняет зарплату сотрудника
+        // РёР·РјРµРЅРёС‚СЊ Р·Р°СЂР°Р±РѕС‚РЅСѓСЋ РїР»Р°С‚Сѓ
         NodeList nodeList = doc.getElementsByTagName("employee");
         Element elNodeList;
         for (int i = 0; i < nodeList.getLength() ; i++) {
@@ -94,7 +93,7 @@ public class xmlTask {
     }
 
     public void fireEmployee(String firstName, String secondName) throws TransformerException {
-        // Удаляет сотрудника
+        // РЈРІРѕР»РёС‚СЊ СЂР°Р±РѕС‚РЅРёРєР°
         NodeList nodeList = doc.getElementsByTagName("department");
         NodeList listEmployees;
         Element elNodeList;
