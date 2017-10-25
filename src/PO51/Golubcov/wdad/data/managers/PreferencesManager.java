@@ -7,6 +7,11 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -17,6 +22,8 @@ public class PreferencesManager {
     private static volatile PreferencesManager instance;
 
     private final Document doc;
+    private String pathConfig = "src\\PO51\\Golubcov\\wdad\\resources\\configuration\\appconfig.xml";
+    private File file = new File(pathConfig);
 
     public static PreferencesManager getInstance() throws Exception {
         if (instance == null)
@@ -30,8 +37,6 @@ public class PreferencesManager {
     private PreferencesManager() throws Exception {
         DocumentBuilderFactory docBFac = DocumentBuilderFactory.newInstance();
         DocumentBuilder docB = docBFac.newDocumentBuilder();
-        String pathConfig = "src\\PO51\\Golubcov\\wdad\\resources\\configuration\\appconfig.xml";
-        File file = new File(pathConfig);
         doc = docB.parse(file);
     }
 
@@ -86,6 +91,10 @@ public class PreferencesManager {
         }
     }
 
+    public String getExecutorName(){
+        Element el = (Element) doc.getElementsByTagName("bindedobject");
+        return el.getAttribute("name");
+    }
 
     @Deprecated
     public String getCreaterRegistry() {
@@ -152,4 +161,10 @@ public class PreferencesManager {
         return strArray[strArray.length-1];
     }
 
+    public void saveXML() throws TransformerException {
+        Transformer trans = TransformerFactory.newInstance().newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(new File(pathConfig));
+        trans.transform(source, result);
+    }
 }
