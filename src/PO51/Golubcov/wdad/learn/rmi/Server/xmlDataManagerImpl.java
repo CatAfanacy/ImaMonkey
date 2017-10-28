@@ -20,14 +20,16 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class xmlDataManagerImpl extends UnicastRemoteObject implements xmlDataManager {
+public class xmlDataManagerImpl implements xmlDataManager {
     private Document doc;
+    private String pathConfig = "PO51\\Golubcov\\wdad\\learn\\rmi\\Server\\ServerXml.xml";
+    private File file = new File(pathConfig);
 
     public xmlDataManagerImpl() throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
-        doc = builder.parse(new File("\\PO51\\Golubcov\\wdad\\learn\\rmi\\Server\\SeverXml.xml"));
+        doc = builder.parse(file);
     }
 
     @Override
@@ -70,7 +72,9 @@ public class xmlDataManagerImpl extends UnicastRemoteObject implements xmlDataMa
             elNodeList = (Element) nodeList.item(i);
             if(elNodeList.getAttribute("firstname").equals(employee.getFirstName())&&
                     elNodeList.getAttribute("secondname").equals(employee.getSecondName())){
-                elNodeList.setAttribute("jobtitle", newJobTitle.toString());
+                NamedNodeMap attribute = elNodeList.getElementsByTagName("jobtitle").item(0).getAttributes();
+                Node value = attribute.getNamedItem("value");
+                value.setTextContent(newJobTitle.toString());
                 saveTransformXML();
                 break;
             }
@@ -85,7 +89,7 @@ public class xmlDataManagerImpl extends UnicastRemoteObject implements xmlDataMa
             elNodeList = (Element) nodeList.item(i);
             if(elNodeList.getAttribute("firstname").equals(employee.getFirstName())&&
                     elNodeList.getAttribute("secondname").equals(employee.getSecondName())){
-                elNodeList.setAttribute("jobtitle", String.valueOf(newSalary));
+                elNodeList.getElementsByTagName("salary").item(0).setTextContent(Integer.toString(newSalary));
                 saveTransformXML();
                 break;
             }
@@ -114,15 +118,18 @@ public class xmlDataManagerImpl extends UnicastRemoteObject implements xmlDataMa
 
     @Override
     public void add(Departament department) throws TransformException  {
-        Element elDepartament = doc.createElement("department");
+        Node root = doc.getDocumentElement();
+
+        Element newDep = doc.createElement("department");
         Element elEmployee;
         Element elTag;
-        elDepartament.setAttribute("name", department.getName());
+        newDep.setAttribute("name", department.getName());
         List<Employee> employeeList = department.getEmployeeList();
         for(int i=0; i<employeeList.size();i++){
             elEmployee = doc.createElement("employee");
             elEmployee.setAttribute("firstname",employeeList.get(i).getFirstName());
             elEmployee.setAttribute("secondname",employeeList.get(i).getSecondName());
+
             elTag=doc.createElement("hiredate");
             Date date=employeeList.get(i).getHiredate();
             elTag.setTextContent(date.getDay()+"-"+date.getMonth()+"-"+date.getYear());
@@ -132,16 +139,20 @@ public class xmlDataManagerImpl extends UnicastRemoteObject implements xmlDataMa
             elEmployee.appendChild(elTag);
             elTag=doc.createElement("jobtitle");
             elTag.setAttribute("jobtitle",employeeList.get(i).getJobTitle().toString());
+
+            newDep.appendChild(elEmployee);
             elEmployee.appendChild(elTag);
-            elDepartament.appendChild(elEmployee);
+            root.appendChild(newDep);
+            saveTransformXML();
         }
     }
 
     private void saveTransformXML() throws TransformException {
         try {
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Transformer transformer = TransformerFactory.newInstance()
+                    .newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("src\\PO51\\Golubcov\\wdad\\learn\\rmi\\Server\\ServerXml.xml"));
+            StreamResult result = new StreamResult(file);
             transformer.transform(source, result);
         } catch (TransformerException ex) {
             System.out.println(ex.getMessage());

@@ -2,7 +2,6 @@ package PO51.Golubcov.wdad.learn.rmi.Server;
 
 
 import PO51.Golubcov.wdad.data.managers.PreferencesManager;
-import PO51.Golubcov.wdad.learn.xml.xmlTask;
 import PO51.Golubcov.wdad.utils.PreferencesConstantManager;
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -43,7 +42,7 @@ public class Server {
             prefMan.saveXML();
             System.out.println("Actions successfully");
         }catch (Exception ex){
-            System.err.println("Because of an error, the server cann`t work");
+            System.err.println("Server Stopped, because of an error, the server cann`t work");
             ex.printStackTrace();
         }
 

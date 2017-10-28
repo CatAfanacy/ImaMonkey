@@ -22,7 +22,7 @@ public class PreferencesManager {
     private static volatile PreferencesManager instance;
 
     private final Document doc;
-    private String pathConfig = "src\\PO51\\Golubcov\\wdad\\resources\\configuration\\appconfig.xml";
+    private String pathConfig = "PO51\\Golubcov\\wdad\\resources\\configuration\\appconfig.xml";
     private File file = new File(pathConfig);
 
     public static PreferencesManager getInstance() throws Exception {
@@ -92,7 +92,7 @@ public class PreferencesManager {
     }
 
     public String getExecutorName(){
-        Element el = (Element) doc.getElementsByTagName("bindedobject");
+        Element el = (Element) doc.getElementsByTagName("bindedobject").item(0);
         return el.getAttribute("name");
     }
 
