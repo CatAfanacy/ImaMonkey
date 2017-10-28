@@ -51,7 +51,7 @@ public class Client {
             XDM.add(department);
 
             Employee testEmployee = new Employee("Samuil", "Vakoulinko",new Date(2007,10,15),30000,JobTitle.manager);
-            XDM.setJobTitle(testEmployee, JobTitle.engineer);
+           XDM.setJobTitle(testEmployee, JobTitle.engineer);
             XDM.setSalary(testEmployee,35000);
 
             Employee fireEmployee = new Employee("Maria","Vakoulinko", new Date(2007,10,02),75000, JobTitle.secretary );
