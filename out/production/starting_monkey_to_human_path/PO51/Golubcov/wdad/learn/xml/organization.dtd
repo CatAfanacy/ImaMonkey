@@ -4,7 +4,7 @@
         <!ELEMENT employee (hiredate, salary,
                 jobtitle)+>
         <!ELEMENT hiredate (#PCDATA)>
-        <!-- hiredate format “DD-MM-YYYY” -->
+        <!-- hiredate format ï¿½DD-MM-YYYYï¿½ -->
         <!ELEMENT salary (#PCDATA)>
         <!ELEMENT jobtitle EMPTY>
         <!ATTLIST organization name CDATA>

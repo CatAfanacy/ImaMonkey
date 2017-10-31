@@ -30,7 +30,7 @@ directory or *jar file, or URL to *.jar file, containing *.class files -->
             </registry>
         </server>
         <client>
-            <policypath>client.policy</policypath>
+            <policypath>PO51\\Golubcov\\wdad\\utils\\security.policy</policypath>
             <usecodebaseonly>no</usecodebaseonly>
         </client>
         <classprovider>http://www.yourhost.free.ru/cp/cp.jar</classprovider>
